@@ -6,7 +6,7 @@
  **/
 package controllers;
 
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import controllers.annotation.AnonymousCheck;
 import data.DataService;
@@ -100,7 +100,7 @@ public class SiteApp extends Controller {
     public static Result userList(int pageNum, String query) {
         String state = StringUtils.defaultIfBlank(request().getQueryString("state"), UserState.ACTIVE.name());
         UserState userState = UserState.valueOf(state);
-        Page<User> users = User.findUsers(pageNum -1, query, userState);
+        PagedList<User> users = User.findUsers(pageNum -1, query, userState);
         return ok(userList.render("title.siteSetting", users, userState, query));
     }
 
@@ -109,7 +109,7 @@ public class SiteApp extends Controller {
      * @return the result
      */
     public static Result postList(int pageNum) {
-        Page<Posting> page = Posting.finder.order("createdDate DESC").findPagingList(POSTING_COUNT_PER_PAGE).getPage(pageNum - 1);
+        PagedList<Posting> page = Posting.finder.order("createdDate DESC").findPagingList(POSTING_COUNT_PER_PAGE).getPage(pageNum - 1);
         return ok(postList.render("title.siteSetting", page));
     }
 
@@ -120,7 +120,7 @@ public class SiteApp extends Controller {
     public static Result issueList(int pageNum) {
         String state = StringUtils.defaultIfBlank(request().getQueryString("state"), State.OPEN.name());
         State currentState = State.valueOf(state.toUpperCase());
-        Page<Issue> page = Issue.findIssuesByState(ISSUE_COUNT_PER_PAGE, pageNum - 1, currentState);
+        PagedList<Issue> page = Issue.findIssuesByState(ISSUE_COUNT_PER_PAGE, pageNum - 1, currentState);
         return ok(issueList.render("title.siteSetting", page, currentState));
     }
 
@@ -157,7 +157,7 @@ public class SiteApp extends Controller {
      * @see {@link Project#findByName(String, int, int)}
      */
     public static Result projectList(String projectName, int pageNum) {
-        Page<Project> projects = Project.findByName(projectName, PROJECT_COUNT_PER_PAGE, pageNum);
+        PagedList<Project> projects = Project.findByName(projectName, PROJECT_COUNT_PER_PAGE, pageNum);
         return ok(projectList.render("title.projectList", projects, projectName));
     }
 

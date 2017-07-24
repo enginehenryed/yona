@@ -21,7 +21,7 @@
 package models.support;
 
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import play.db.ebean.Model;
 
 import java.util.Collection;
@@ -97,7 +97,7 @@ public class FinderTemplate {
         return makeExpressionList(mop, msp, finder).findList();
     }
 
-    public static <K, T> Page<T> getPage(OrderParams mop,
+    public static <K, T> PagedList<T> getPage(OrderParams mop,
                                          SearchParams msp,
                                          Model.Finder<K, T> finder, int pageSize, int page) {
         return makeExpressionList(mop, msp, finder).findPagingList(pageSize).getPage(page);

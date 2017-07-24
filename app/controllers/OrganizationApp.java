@@ -6,7 +6,7 @@
 package controllers;
 
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import controllers.annotation.AnonymousCheck;
 import models.*;
 import models.enumeration.Operation;
@@ -455,7 +455,7 @@ public class OrganizationApp extends Controller {
         if (pageNum < 1) {
             return notFound(ErrorViews.NotFound.render("error.notfound"));
         }
-        Page<Organization> orgs = Organization.findByNameLike(query).getPage(pageNum-1);
+        PagedList<Organization> orgs = Organization.findByNameLike(query).getPage(pageNum-1);
 
         return ok(views.html.organization.list.render("title.projectList", orgs, query));
     }

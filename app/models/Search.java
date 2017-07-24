@@ -23,7 +23,7 @@ package models;
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Junction;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import controllers.Application;
 import models.enumeration.Operation;
 import models.enumeration.ProjectScope;
@@ -95,7 +95,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<Issue> findIssues(String keyword, User user, PageParam pageParam) {
+    public static PagedList<Issue> findIssues(String keyword, User user, PageParam pageParam) {
         return issuesEL(keyword, user).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -143,7 +143,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<Issue> findIssues(String keyword, User user, Project project, PageParam pageParam) {
+    public static PagedList<Issue> findIssues(String keyword, User user, Project project, PageParam pageParam) {
         return issuesEL(keyword, user, project).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -187,7 +187,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<Issue> findIssues(String keyword, User user, Organization organization, PageParam pageParam) {
+    public static PagedList<Issue> findIssues(String keyword, User user, Organization organization, PageParam pageParam) {
         return issuesEL(keyword, user, organization).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -229,7 +229,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<Posting> findPosts(String keyword, User user, PageParam pageParam) {
+    public static PagedList<Posting> findPosts(String keyword, User user, PageParam pageParam) {
         return postsEL(keyword, user).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -268,7 +268,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<Posting> findPosts(String keyword, User user, Project project, PageParam pageParam) {
+    public static PagedList<Posting> findPosts(String keyword, User user, Project project, PageParam pageParam) {
         return postsEL(keyword, user, project).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -309,7 +309,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<Posting> findPosts(String keyword, User user, Organization organization, PageParam pageParam) {
+    public static PagedList<Posting> findPosts(String keyword, User user, Organization organization, PageParam pageParam) {
         return postsEL(keyword, user, organization).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -344,7 +344,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<User> findUsers(String keyword, PageParam pageParam) {
+    public static PagedList<User> findUsers(String keyword, PageParam pageParam) {
         return usersEL(keyword).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -377,7 +377,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<User> findUsers(String keyword, Project project, PageParam pageParam) {
+    public static PagedList<User> findUsers(String keyword, Project project, PageParam pageParam) {
         return usersEL(keyword, project).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -413,7 +413,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<User> findUsers(String keyword, Organization organization, PageParam pageParam) {
+    public static PagedList<User> findUsers(String keyword, Organization organization, PageParam pageParam) {
         return usersEL(keyword, organization).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -448,7 +448,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<Project> findProjects(String keyword, User user, PageParam pageParam) {
+    public static PagedList<Project> findProjects(String keyword, User user, PageParam pageParam) {
         return projectsEL(keyword, user).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -478,7 +478,7 @@ public class Search {
      * @param pageParam
      * @return
      */
-    public static Page<Project> findProjects(String keyword, User user, Organization organization, PageParam pageParam) {
+    public static PagedList<Project> findProjects(String keyword, User user, Organization organization, PageParam pageParam) {
         return projectsEL(keyword, user).eq("organization", organization)
                 .findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
@@ -525,7 +525,7 @@ public class Search {
         return el;
     }
 
-    public static Page<Milestone> findMilestones(String keyword, User user, PageParam pageParam) {
+    public static PagedList<Milestone> findMilestones(String keyword, User user, PageParam pageParam) {
         return milestonesEL(keyword, user).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -542,7 +542,7 @@ public class Search {
         return el;
     }
 
-    public static Page<Milestone> findMilestones(String keyword, User user, Project project, PageParam pageParam) {
+    public static PagedList<Milestone> findMilestones(String keyword, User user, Project project, PageParam pageParam) {
         if(!AccessControl.isAllowed(user, project.asResource(), Operation.READ)) {
             return emptyPage();
         }
@@ -566,7 +566,7 @@ public class Search {
         return el;
     }
 
-    public static Page<Milestone> findMilestones(String keyword, User user, Organization organization, PageParam pageParam) {
+    public static PagedList<Milestone> findMilestones(String keyword, User user, Organization organization, PageParam pageParam) {
         return milestonesEL(keyword, user, organization).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -584,7 +584,7 @@ public class Search {
         return el;
     }
 
-    public static Page<IssueComment> findIssueComments(String keyword, User user, PageParam pageParam) {
+    public static PagedList<IssueComment> findIssueComments(String keyword, User user, PageParam pageParam) {
         return issueCommentsEL(keyword, user).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -602,7 +602,7 @@ public class Search {
         return el;
     }
 
-    public static Page<IssueComment> findIssueComments(String keyword, User user, Project project, PageParam pageParam) {
+    public static PagedList<IssueComment> findIssueComments(String keyword, User user, Project project, PageParam pageParam) {
         return issueCommentsEL(keyword, user, project).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -621,7 +621,7 @@ public class Search {
         return el;
     }
 
-    public static Page<IssueComment> findIssueComments(String keyword, User user, Organization organization, PageParam pageParam) {
+    public static PagedList<IssueComment> findIssueComments(String keyword, User user, Organization organization, PageParam pageParam) {
         return issueCommentsEL(keyword, user, organization).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -640,7 +640,7 @@ public class Search {
         return el;
     }
 
-    public static Page<PostingComment> findPostComments(String keyword, User user, PageParam pageParam) {
+    public static PagedList<PostingComment> findPostComments(String keyword, User user, PageParam pageParam) {
         return postCommentsEL(keyword, user).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -658,7 +658,7 @@ public class Search {
         return el;
     }
 
-    public static Page<PostingComment> findPostComments(String keyword, User user, Project project, PageParam pageParam) {
+    public static PagedList<PostingComment> findPostComments(String keyword, User user, Project project, PageParam pageParam) {
         return postCommentsEL(keyword, user, project).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -678,7 +678,7 @@ public class Search {
         return el;
     }
 
-    public static Page<PostingComment> findPostComments(String keyword, User user, Organization organization, PageParam pageParam) {
+    public static PagedList<PostingComment> findPostComments(String keyword, User user, Organization organization, PageParam pageParam) {
         return postCommentsEL(keyword, user, organization).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -697,7 +697,7 @@ public class Search {
         return el;
     }
 
-    public static Page<ReviewComment> findReviews(String keyword, User user, PageParam pageParam) {
+    public static PagedList<ReviewComment> findReviews(String keyword, User user, PageParam pageParam) {
         return reviewsEL(keyword, user).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -715,7 +715,7 @@ public class Search {
         return el;
     }
 
-    public static Page<ReviewComment> findReviews(String keyword, User user, Project project, PageParam pageParam) {
+    public static PagedList<ReviewComment> findReviews(String keyword, User user, Project project, PageParam pageParam) {
         return reviewsEL(keyword, user, project).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -734,7 +734,7 @@ public class Search {
         return el;
     }
 
-    public static Page<ReviewComment> findReviews(String keyword, User user, Organization organization, PageParam pageParam) {
+    public static PagedList<ReviewComment> findReviews(String keyword, User user, Organization organization, PageParam pageParam) {
         return reviewsEL(keyword, user, organization).findPagingList(pageParam.getSize()).getPage(pageParam.getPage());
     }
 
@@ -835,8 +835,8 @@ public class Search {
         }
     }
 
-    private static <T> Page<T> emptyPage() {
-        return new Page<T>() {
+    private static <T> PagedList<T> emptyPage() {
+        return new PagedList<T>() {
             @Override
             public List<T> getList() {
                 return new ArrayList<>();
@@ -868,12 +868,12 @@ public class Search {
             }
 
             @Override
-            public Page<T> next() {
+            public PagedList<T> next() {
                 return null;
             }
 
             @Override
-            public Page<T> prev() {
+            public PagedList<T> prev() {
                 return null;
             }
 

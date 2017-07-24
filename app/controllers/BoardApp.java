@@ -7,7 +7,7 @@ package controllers;
 
 import actions.NullProjectCheckAction;
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.annotation.AnonymousCheck;
 import controllers.annotation.IsAllowed;
@@ -129,7 +129,7 @@ public class BoardApp extends AbstractPostingApp {
             return notFound(ErrorViews.NotFound.render("error.notfound.organization"));
         }
         ExpressionList<Posting> el = searchCondition.asExpressionList(organization);
-        Page<Posting> posts = el.findPagingList(ITEMS_PER_PAGE).getPage(searchCondition.pageNum);
+        PagedList<Posting> posts = el.findPagingList(ITEMS_PER_PAGE).getPage(searchCondition.pageNum);
 
         return ok(group_board_list.render("menu.board", organization, posts, searchCondition, null));
     }

@@ -763,7 +763,7 @@ public class PullRequest extends Model implements ResourceConvertible {
         return GitRepository.getDiff(repository, revA, repository, revB);
     }
 
-    public static Page<PullRequest> findPagingList(SearchCondition condition) {
+    public static PagedList<PullRequest> findPagingList(SearchCondition condition) {
         return createSearchExpressionList(condition)
                 .order().desc(condition.category.order())
                 .findPagingList(ITEMS_PER_PAGE)

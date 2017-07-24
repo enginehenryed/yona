@@ -28,7 +28,7 @@ import java.util.Map;
 import models.enumeration.UserState;
 import org.junit.Test;
 
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import org.omg.PortableInterceptor.ACTIVE;
 import play.data.validation.Validation;
 
@@ -106,7 +106,7 @@ public class UserTest extends ModelTest<User> {
 	public void findUsers() throws Exception {
 	    // Given
 	    // When
-	    Page<User> searchUsers = User.findUsers(0, "yobi", UserState.ACTIVE);
+	    PagedList<User> searchUsers = User.findUsers(0, "yobi", UserState.ACTIVE);
 	    // Then
 	    assertThat(searchUsers.getTotalRowCount()).isEqualTo(1);
 	}

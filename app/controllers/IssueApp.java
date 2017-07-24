@@ -8,7 +8,7 @@ package controllers;
 
 import actions.NullProjectCheckAction;
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import controllers.annotation.AnonymousCheck;
 import controllers.annotation.IsAllowed;
 import controllers.annotation.IsCreatable;
@@ -53,7 +53,7 @@ public class IssueApp extends AbstractPostingApp {
             return notFound(ErrorViews.NotFound.render("error.notfound.organization"));
         }
         ExpressionList<Issue> el = searchCondition.asExpressionList(organization);
-        Page<Issue> issues = el.findPagingList(itemsPerPage).getPage(searchCondition.pageNum);
+        PagedList<Issue> issues = el.findPagingList(itemsPerPage).getPage(searchCondition.pageNum);
 
         return ok(group_issue_list.render("title.issueList", issues, searchCondition, organization));
     }
@@ -82,7 +82,7 @@ public class IssueApp extends AbstractPostingApp {
 
         Integer itemsPerPage = getItemsPerPage();
         ExpressionList<Issue> el = searchCondition.asExpressionList();
-        Page<Issue> issues = el.findPagingList(itemsPerPage).getPage(searchCondition.pageNum);
+        PagedList<Issue> issues = el.findPagingList(itemsPerPage).getPage(searchCondition.pageNum);
 
         switch(format){
             case "pjax":
@@ -121,7 +121,7 @@ public class IssueApp extends AbstractPostingApp {
 
         Integer itemsPerPage = getItemsPerPage();
         ExpressionList<Issue> el = searchCondition.asExpressionList(project);
-        Page<Issue> issues = el.findPagingList(itemsPerPage).getPage(searchCondition.pageNum);
+        PagedList<Issue> issues = el.findPagingList(itemsPerPage).getPage(searchCondition.pageNum);
 
         switch(format){
             case EXCEL_EXT:
@@ -152,7 +152,7 @@ public class IssueApp extends AbstractPostingApp {
         return Math.min(itemsPerPage, ITEMS_PER_PAGE_MAX);
     }
 
-    private static Result issuesAsHTML(Project project, Page<Issue> issues, models.support.SearchCondition searchCondition){
+    private static Result issuesAsHTML(Project project, PagedList<Issue> issues, models.support.SearchCondition searchCondition){
         if(project == null){
             return ok(my_list.render("title.issueList", issues, searchCondition, project));
         } else {
@@ -172,7 +172,7 @@ public class IssueApp extends AbstractPostingApp {
         return ok(excelData);
     }
 
-    private static Result issuesAsPjax(Project project, Page<Issue> issues, models.support.SearchCondition searchCondition) {
+    private static Result issuesAsPjax(Project project, PagedList<Issue> issues, models.support.SearchCondition searchCondition) {
         response().setHeader("Cache-Control", "no-cache, no-store");
         if (project == null) {
             return ok(my_partial_search.render("title.issueList", issues, searchCondition, project));
@@ -182,7 +182,7 @@ public class IssueApp extends AbstractPostingApp {
 
     }
 
-    private static Result issuesAsJson(Project project, Page<Issue> issues) {
+    private static Result issuesAsJson(Project project, PagedList<Issue> issues) {
         ObjectNode listData = Json.newObject();
 
         String exceptIdStr = request().getQueryString("exceptId");

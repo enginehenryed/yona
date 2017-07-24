@@ -7,7 +7,7 @@
 package controllers;
 
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import com.avaje.ebean.annotation.Transactional;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.feth.play.module.mail.Mailer;
@@ -712,7 +712,7 @@ public class UserApp extends Controller {
             pageNum = Integer.parseInt(pageNumString);
         }
 
-        Page<Attachment> page = Attachment.findByUser(currentUser(), USER_FILES_COUNT_PER_PAGE, pageNum, filter);
+        PagedList<Attachment> page = Attachment.findByUser(currentUser(), USER_FILES_COUNT_PER_PAGE, pageNum, filter);
         return ok(userFiles.render("User Files", page));
     }
 

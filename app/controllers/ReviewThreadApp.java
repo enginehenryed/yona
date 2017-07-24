@@ -7,7 +7,7 @@
 package controllers;
 
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import controllers.annotation.AnonymousCheck;
 import controllers.annotation.IsAllowed;
 import jxl.Workbook;
@@ -47,7 +47,7 @@ public class ReviewThreadApp extends Controller {
         if ("xls".equals(request().getQueryString("format"))) {
             return reviewThreadsDownload(project, el);
         }
-        Page<CommentThread> commentThreads = el.findPagingList(REVIEWS_PER_PAGE).getPage(searchCondition.pageNum - 1);
+        PagedList<CommentThread> commentThreads = el.findPagingList(REVIEWS_PER_PAGE).getPage(searchCondition.pageNum - 1);
         return ok(list.render(project, commentThreads, searchCondition));
     }
 

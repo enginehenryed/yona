@@ -5,7 +5,7 @@
  */
 package models;
 
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import controllers.AttachmentApp;
 import controllers.UserApp;
@@ -521,7 +521,7 @@ public class Attachment extends Model implements ResourceConvertible {
         return save(moveFileIntoUploadDirectory(tmpFile, tempFileHash), fileName, container);
     }
 
-    public static Page<Attachment> findByUser(User user, int pageSize, int pageNo, String filter){
+    public static PagedList<Attachment> findByUser(User user, int pageSize, int pageNo, String filter){
         if (StringUtils.isEmpty(filter)) {
             return Attachment.find.where()
                     .eq("owner_login_id", user.loginId)
