@@ -8,7 +8,7 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import com.avaje.ebean.RawSqlBuilder;
 import controllers.UserApp;
 import models.enumeration.ResourceType;
@@ -26,7 +26,7 @@ import play.data.validation.Constraints;
 import play.data.validation.Constraints.Pattern;
 import play.data.validation.Constraints.Required;
 import play.data.validation.Constraints.ValidateWith;
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 import play.db.ebean.Transactional;
 import play.i18n.Messages;
 import utils.CacheStore;
@@ -371,7 +371,7 @@ public class User extends Model implements ResourceConvertible {
      * @param query If {@code query}is not null, search list contains {@code query}
      * @return user list forms of Page which is ordered by login id
      */
-    public static Page<User> findUsers(int pageNum, String query, UserState state) {
+    public static PagedList<User> findUsers(int pageNum, String query, UserState state) {
         ExpressionList<User> el = User.find.where();
         el.ne("id",SITE_MANAGER_ID);
         el.ne("loginId",anonymous.loginId);

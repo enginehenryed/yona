@@ -8,7 +8,7 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import com.avaje.ebean.RawSqlBuilder;
 import models.enumeration.ProjectScope;
 import models.enumeration.RequestState;
@@ -45,7 +45,7 @@ import static utils.HttpUtil.decodeUrlString;
 @Entity
 public class Project extends Model implements LabelOwner {
     private static final long serialVersionUID = 1L;
-    public static final play.db.ebean.Model.Finder <Long, Project> find = new Finder<>(Long.class, Project.class);
+    public static final com.avaje.ebean.Model.Finder <Long, Project> find = new Finder<>(Long.class, Project.class);
 
     private static final int DRAFT_TIME_IN_MILLIS = 1000 * 60 * 60;
 
@@ -148,7 +148,7 @@ public class Project extends Model implements LabelOwner {
         return newProject.id;
     }
 
-    public static Page<Project> findByName(String name, int pageSize,
+    public static PagedList<Project> findByName(String name, int pageSize,
                                            int pageNum) {
         if(StringUtils.isBlank(name)){
             return find.where().order().desc("createdDate").findPagingList(pageSize).getPage(pageNum);

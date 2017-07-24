@@ -20,9 +20,15 @@
  */
 package models;
 
+import java.io.IOException;
+import java.util.*;
+
+import javax.persistence.*;
+import javax.servlet.ServletException;
+
 import com.avaje.ebean.Expr;
-import com.avaje.ebean.Page;
-import com.avaje.ebean.PagingList;
+// import com.avaje.ebean.PagingList;
+import com.avaje.ebean.PagedList;
 import controllers.Application;
 import models.enumeration.RequestState;
 import models.enumeration.ResourceType;
@@ -36,11 +42,6 @@ import play.db.ebean.Transactional;
 import playRepository.PlayRepository;
 import playRepository.RepositoryService;
 import utils.ReservedWordsValidator;
-
-import javax.persistence.*;
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.util.*;
 
 @Entity
 public class Organization extends Model implements ResourceConvertible {
@@ -79,11 +80,11 @@ public class Organization extends Model implements ResourceConvertible {
         return find.where().ieq("name", name).findUnique();
     }
 
-    public static PagingList<Organization> findByNameLike(String name) {
+    public static PagedList<Organization> findByNameLike(String name) {
         return find.where().or(
                 Expr.like("name", "%" + name + "%"),
                 Expr.like("descr", "%" + name + "%")
-        ).orderBy("id desc").findPagingList(30);
+        ).orderBy("id desc").findPagedList(30);
     }
 
     public static boolean isNameExist(String name) {

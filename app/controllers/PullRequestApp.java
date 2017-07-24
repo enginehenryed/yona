@@ -22,7 +22,7 @@ package controllers;
 
 import actors.PullRequestMergingActor;
 import akka.actor.Props;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.annotation.AnonymousCheck;
 import controllers.annotation.IsAllowed;
@@ -348,7 +348,7 @@ public class PullRequestApp extends Controller {
 
         SearchCondition condition = Form.form(SearchCondition.class).bindFromRequest().get();
         condition.setProject(project).setCategory(category);
-        Page<PullRequest> page = PullRequest.findPagingList(condition);
+        PagedList<PullRequest> page = PullRequest.findPagingList(condition);
         if (HttpUtil.isPJAXRequest(request())) {
             response().setHeader("Cache-Control", "no-cache, no-store");
             return ok(partial_search.render(project, page, condition, category.code));

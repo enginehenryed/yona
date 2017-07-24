@@ -8,7 +8,7 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
+import com.avaje.ebean.PagedList;
 import com.avaje.ebean.annotation.Formula;
 import controllers.routes;
 import jxl.Workbook;
@@ -28,7 +28,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.util.CollectionUtils;
 import play.data.Form;
 import play.data.format.Formats;
-import play.db.ebean.Model.Finder;
+import com.avaje.ebean.Model.Finder;
 import play.i18n.Messages;
 import utils.JodaDateUtil;
 
@@ -472,7 +472,7 @@ public class Issue extends AbstractPosting implements LabelOwner {
         return el.setMaxRows(limit).order().desc("createdDate").findList();
     }
 
-    public static Page<Issue> findIssuesByState(int size, int pageNum, State state) {
+    public static PagedList<Issue> findIssuesByState(int size, int pageNum, State state) {
         return finder.where().eq("state", state)
                 .order().desc("createdDate")
                 .findPagingList(size).getPage(pageNum);

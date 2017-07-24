@@ -9,7 +9,7 @@ libraryDependencies ++= Seq(
   // Add your project dependencies here,
   javaCore,
   javaJdbc,
-  javaEbean,
+  // javaEbean,
   javaWs,
   cache,
   // PlayAuthenticat for social login
@@ -56,7 +56,9 @@ libraryDependencies ++= Seq(
   "com.google.guava" % "guava" % "19.0",
   "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
   "org.springframework" % "spring-jdbc" % "4.1.5.RELEASE",
-  "org.mozilla" % "rhino" % "1.7.7.1"
+  "org.mozilla" % "rhino" % "1.7.7.1",
+  "org.specs2" %% "specs2-core" % "3.5" % "test",
+  evolutions
 )
 
 val projectSettings = Seq(
@@ -68,6 +70,7 @@ val projectSettings = Seq(
   resolvers += "julienrf.github.com" at "http://julienrf.github.com/repo/",
   resolvers += "opencast-public" at "http://nexus.opencast.org/nexus/content/repositories/public",
   resolvers += "jfrog" at "http://repo.jfrog.org/artifactory/libs-releases/", 
+  resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases",
   TwirlKeys.templateImports in Compile += "models.enumeration._",
   TwirlKeys.templateImports in Compile += "scala.collection.JavaConversions._",
   TwirlKeys.templateImports in Compile += "play.core.j.PlayMagicForJava._",
@@ -113,7 +116,7 @@ NativePackagerKeys.batScriptExtraDefines += """
     |""".stripMargin
 
 lazy val yobi = (project in file("."))
-      .enablePlugins(PlayScala)
+      .enablePlugins(PlayScala, PlayEbean)
       .enablePlugins(SbtWeb)
       .enablePlugins(SbtTwirl)
       .settings(projectSettings: _*)
